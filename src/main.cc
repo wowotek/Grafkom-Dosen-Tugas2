@@ -6,6 +6,7 @@
 #define HIJAU_MUDA 3
 
 GLfloat r = 0, g = 0, b = 0;
+
 void myInit(void);
 void renderDisplay(void);
 void changeColor(void);
@@ -18,19 +19,17 @@ int main(int argc, char ** argv){
     glutDisplayFunc(renderDisplay);
     glutIdleFunc(changeColor);
 
-    myInit();
-    glutMainLoop();
-
-	return 0;
-}
-
-void myInit(void){
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glColor3f(0.0, 0.0, 0.0);
     glPointSize(10.0);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0.0, 1.0, 0.0, 1.0);   
+
+    gluOrtho2D(0.0, 1.0, 0.0, 1.0);
+    
+    glutMainLoop();
+
+	return 0;
 }
 
 void renderDisplay(void){
@@ -42,10 +41,20 @@ void renderDisplay(void){
     glutSwapBuffers();
 }
 
+GLint pTime = 0;
+GLint frameCount = 0;
 void changeColor(void){
-    if(glutGet(GLUT_ELAPSED_TIME) % 1000 == 0){
-        std::cout << "SECOND" << std::endl;
+    pTime++;
+    if(pTime % 10000 == 0){
+        pTime = 0;
+        frameCount++;
     }
+
+    if(frameCount % 120 == 0){
+        frameCount = 0;
+    }
+
+    std::cout << "Frame Passed" << std::endl;
 }
 
 void _changeColor(GLint theColor){

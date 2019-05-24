@@ -4,16 +4,28 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 
-// Window initializer
+/*
+ * initGLWindow(GLfloat width, GLfloat height, std::string name, uint switches)
+ * 
+ * a simpler syntax for initializing your window
+ */
 #define initGLWindow(width, height, name, switches) \
     glutInit(&argc, argv); \
     glutInitDisplayMode(switches); \
     glutInitWindowSize(width, height); \
     glutCreateWindow(name)
 
-// simpler syntax for glBegin switches
+/*
+ * POINTS -> glBegin(GL_POINTS)
+ */
 #define POINTS glBegin(GL_POINTS)
+/*
+ * POLYGON -> glBegin(GL_POLYGON)
+ */
 #define POLYGON glBegin(GL_POLYGON)
+/*
+ * LINES -> glBegin(GL_LINES)
+ */
 #define LINES glBegin(GL_LINES)
 
 // simpler syntax for coloring the shapes
