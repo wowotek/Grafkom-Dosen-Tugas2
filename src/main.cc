@@ -1,5 +1,5 @@
 #include <iostream>
-#include "wo2glib.hh"
+#include "wo2glib.hpp"
 
 GLfloat r = 0, g = 0, b = 0;
 
