@@ -28,10 +28,17 @@
  */
 #define LINES glBegin(GL_LINES)
 
-// simpler syntax for coloring the shapes
-// fill for an RGB values
+/*
+ * fill(GLfloat r, GLfloat g, GLfloat b)
+ * 
+ * Fill the next Polygon with RGB values with A as an Alpha (RGB)
+ */
 #define fill(r, g, b) glColor3f(r, g, b)
-// filla for an RGB values with A as an Alpha (RGBA)
+/*
+ * filla(GLfloat r, GLfloat g, GLfloat b, GLfloat a)
+ * 
+ * Fill the next Polygon with RGB values with A as an Alpha (RGBA)
+ */
 #define filla(r, g, b, a) glColor4f(r, g, b, a)
 
 /*
@@ -63,4 +70,4 @@
  */
 #define randint(min, max) std::rand() % max + min
 
-#endif // PHYSICS_H
+#endif

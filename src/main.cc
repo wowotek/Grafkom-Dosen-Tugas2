@@ -1,23 +1,17 @@
 #include <iostream>
 #include "wo2glib.hh"
 
-#define       PINK 1
-#define  BIRU_MUDA 2
-#define HIJAU_MUDA 3
-
 GLfloat r = 0, g = 0, b = 0;
 
 void myInit(void);
 void renderDisplay(void);
-void changeColor(void);
+void changeColorSubRoutine(int);
 
 int main(int argc, char ** argv){
-    initGLWindow(768, 768,
-        "BelajarOpenGL-672017282",
-        GLUT_DOUBLE | GLUT_RGB);
+    initGLWindow(400, 400, "BelajarOpenGL-672017282", GLUT_DOUBLE | GLUT_RGB);
 
     glutDisplayFunc(renderDisplay);
-    glutIdleFunc(changeColor);
+    changeColorSubRoutine(1000/120);
 
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glColor3f(0.0, 0.0, 0.0);
@@ -35,40 +29,67 @@ int main(int argc, char ** argv){
 void renderDisplay(void){
     glClear(GL_COLOR_BUFFER_BIT);
 
-    fill(r, g, b);
+    fill(r/100, g/100, b/100);
     rect(0, 0, 1, 1);
     
     glutSwapBuffers();
 }
 
-GLint pTime = 0;
-GLint frameCount = 0;
-void changeColor(void){
-    pTime++;
-    if(pTime % 10000 == 0){
-        pTime = 0;
-        frameCount++;
+#define       PINK {100,  41,  71}
+#define  BIRU_MUDA {  0, 100, 100}
+#define HIJAU_MUDA { 60,  98,  60}
+
+#define ALL_COLOR_STATUS (gradientStatus[0] && \
+                          gradientStatus[1] && \
+                          gradientStatus[2])
+#define GRADIENT_SPEED 1
+
+GLint targetColor[3][3] = {PINK, BIRU_MUDA, HIJAU_MUDA};
+GLint colorTracker = 0;
+GLint delayTime = 0;
+GLboolean gradientStatus[] = {false, false, false};
+void changeColorSubRoutine(int ms){
+    if(r < targetColor[colorTracker][0]){
+        r += GRADIENT_SPEED;
+        gradientStatus[0] = false;
+    } else if(r > targetColor[colorTracker][0]) {
+        r -= GRADIENT_SPEED;
+        gradientStatus[0] = false;
+    } else {
+        gradientStatus[0] = true;
     }
 
-    if(frameCount % 120 == 0){
-        frameCount = 0;
+    if(g < targetColor[colorTracker][1]){
+        g += GRADIENT_SPEED;
+        gradientStatus[1] = false;
+    } else if(g > targetColor[colorTracker][1]) {
+        g -= GRADIENT_SPEED;
+        gradientStatus[1] = false;
+    } else {
+        gradientStatus[1] = true;
     }
 
-    std::cout << "Frame Passed" << std::endl;
-}
-
-void _changeColor(GLint theColor){
-    switch(theColor){
-        case 1: // PINK
-            r = 1.00; g = 0.41; b = 0.71;
-            break;
-        case 2: // BIRU_MUDA
-            r = 0.00; g = 1.00; b = 1.00;
-            break;
-        case 3: // HIJAU_MUDA
-            r = 0.60; g = 0.98; b = 0.60;
-            break;
-        default: break;
+    if(b < targetColor[colorTracker][2]){
+        b += GRADIENT_SPEED;
+        gradientStatus[2] = false;
+    } else if(b > targetColor[colorTracker][2]) {
+        b -= GRADIENT_SPEED;
+        gradientStatus[2] = false;
+    } else {
+        gradientStatus[2] = true;
     }
+
+    if (ALL_COLOR_STATUS && delayTime < 120){
+        delayTime++;
+    } else if (ALL_COLOR_STATUS && delayTime >= 120) {
+        colorTracker++; 
+        if(colorTracker >= 3){
+            colorTracker = 0;
+        }
+        delayTime = 0;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(ms, changeColorSubRoutine, ms);
 }
 
