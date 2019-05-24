@@ -6,9 +6,9 @@
 > Semua sumber yang digunakan pada tugas ini, dapat dilihat pada :
 > https://github.com/wowotek/Grafkom-Dosen-Tugas2
 
-> **PERINGATAN** : *Tugas ini dirilis setelah tenggat waktu pengumpulan tugas, dan tidak akan berlaku untuk kolega dengan tenggat waktu pengumpulan yang sama*
+> **PERINGATAN** : *Tugas ini dirilis **setelah tenggat waktu** pengumpulan tugas, dan tidak akan berlaku untuk kolega dengan tenggat waktu pengumpulan yang sama*
 
-> **PERINGATAN** : *Tugas ini dirilis tanpa garansi, termasuk nilai yang di-nihilkan oleh sebab mencontek dan/atau menyalin dan/atau meniru yang bersumber dari tugas ini*
+> **PERINGATAN** : *Tugas ini dirilis **tanpa garansi**, termasuk nilai yang di-nihilkan oleh sebab **mencontek** dan/atau **menyalin** dan/atau **meniru** yang bersumber dari tugas ini*
 # Grafkom-Dosen-Tugas2
 ## Penulis
 * Nama : **Erlangga Ibrahim**
@@ -27,7 +27,7 @@
 3. Warna background yang berubah setiap detiknya (Minimal 3 warna).
 
 ## Hasil Pengerjaan
-Window OpenGL saya inisialisasikan sebesar `400px` x `400px`, dengan `Double Buffer` dan `RGB` switch.
+Window OpenGL di inisialisasikan sebesar `400px` x `400px`, dengan `Double Buffer` dan `RGB` switch.
 ```C++
 glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 glutInitWindowSize(400, 400);
@@ -51,4 +51,33 @@ GLint targetColor[3][3] = {
     { 60,  98,  60}  // HIJAU_MUDA
 }
 ```
+Perubahan Warna diatur didalam fungsi `changeColorSubRoutine` yang dipanggil setiap 1/120 detik, dan di render didalam fungsi `renderDisplay`
+```c++
+int main(int argc, char ** argv){
+    /* ... */
 
+    glutDisplayFunc(renderDisplay);
+    changeColorSubRoutine(1000/120); // 1000 ms / 120
+
+    /* ... */
+}
+
+void changeColorSubRoutine (int ms) {
+    /* ... */
+    /* IMPLEMENTASI PERUBAHAN WARNA DISINI */
+    /* ... */
+
+    glutPostRedisplay();
+    glutTimerFunc(ms, changeColorSubRoutine, ms);
+}
+```
+
+## Kompilasi Source Code
+### GNU/Linux
+```bash
+g++ src/main.cpp -lGL -lGLU -lglut -Wall -o main.out
+```
+### Windows
+```powershell
+# todo add how to compile in windows
+```
