@@ -71,6 +71,11 @@ void changeColorSubRoutine (int ms) {
     glutTimerFunc(ms, changeColorSubRoutine, ms);
 }
 ```
+## ScreenShot
+![animwindow](img/Animasi.gif)
+![window_pink](img/wpink.png)
+![window_hijau](img/whijau.png)
+![window_biru](img/wbiru.png)
 
 ## Kompilasi Source Code
 ### GNU/Linux
